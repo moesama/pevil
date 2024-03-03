@@ -1,5 +1,8 @@
+@import "@flaticon/flaticon-uicons/css/bold/rounded.css";
+
 .panel {
     @apply relative;
+
     &:before {
         @apply absolute left-1 right-1 top-1 bottom-1 rounded border bg-card text-card-foreground shadow;
         content: "";

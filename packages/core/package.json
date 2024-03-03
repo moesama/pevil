@@ -1,0 +1,9 @@
+{
+  "name": "@pevil/core",
+  "version": "1.0.0",
+  "description": "",
+  "main": "src/index.ts",
+  "devDependencies": {
+    "@tsconfig/recommended": "^1.0.3"
+  }
+}
