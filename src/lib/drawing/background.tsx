@@ -14,7 +14,7 @@ export function Background({
 }) {
   const draw = useCallback(
     (g: PixiGraphics) => {
-      const c = new Color(color ?? 0x000000);
+      const c = new Color(color ?? 0x00000000);
       c.setAlpha(c.alpha > 0 ? 1 : 0);
       if (c.alpha === 0) {
       } else {

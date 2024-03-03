@@ -14,7 +14,7 @@ export function Layer({ pixels, blendMode }: LayerData) {
   const draw = useCallback(
     (g: PixiGraphics) => {
       // 设置混合模式
-      // g.blendMode = blendMode;
+      g.blendMode = blendMode;
       // 绘制像素
       Object.entries(pixels).forEach(([color, [x, y]]) => {
         g.beginFill(new Color(color));

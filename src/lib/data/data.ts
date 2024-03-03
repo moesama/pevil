@@ -1,4 +1,4 @@
-import { BLEND_MODES, ColorSource } from "pixi.js";
+import { BLEND_MODES } from "pixi.js";
 
 export type Unit = GroupData | LayerData | ArtBoardData;
 
@@ -24,5 +24,12 @@ export interface ArtBoardData extends Omit<GroupData, "type"> {
   type: "artboard";
   width: number;
   height: number;
-  backgroundColor?: ColorSource;
+  backgroundColor?: number;
+}
+
+export interface WorkspaceData {
+  id: string;
+  name: string;
+  path: string;
+  artboards: ArtBoardData[];
 }

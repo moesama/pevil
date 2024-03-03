@@ -1,15 +1,20 @@
 import { HTMLAttributes, useEffect, useRef } from "react";
 import { cn } from "@/lib/utils.ts";
-import { Container, Stage } from "@pixi/react";
-import { Layer } from "@/lib/drawing/layer.tsx";
-import { Application, BLEND_MODES } from "pixi.js";
+import { Stage } from "@pixi/react";
+import { Application } from "pixi.js";
 import { useResizeDetector } from "react-resize-detector";
+import { Provider } from "react-redux";
+import { useWorkspace } from "@/store";
+import { WorkspaceData } from "@/lib/data/data.ts";
 
-export type WorkspaceProps = HTMLAttributes<HTMLDivElement>;
+export type WorkspaceProps = HTMLAttributes<HTMLDivElement> & {
+  data: WorkspaceData;
+};
 
-export function Workspace({ className, ...props }: WorkspaceProps) {
+export function Workspace({ data, className, ...props }: WorkspaceProps) {
   const app = useRef<Application>();
   const container = useRef<HTMLDivElement>(null);
+  const workspace = useWorkspace();
 
   useEffect(() => {
     if (app.current && container.current) {
@@ -31,27 +36,20 @@ export function Workspace({ className, ...props }: WorkspaceProps) {
       ref={container}
       className={cn("flex justify-center items-center", className)}
     >
-      <Stage
-        options={{
-          resolution: window.devicePixelRatio || 1,
-          backgroundColor: "#d2d6da",
-        }}
-        onMount={(a) => {
-          app.current = a;
-        }}
-        onUnmount={() => {
-          app.current = undefined;
-        }}
-      >
-        <Container x={width! / 2} y={height! / 2}>
-          <Layer
-            id=""
-            title=""
-            pixels={{ "#ffffff": [10, 10] }}
-            blendMode={BLEND_MODES.NORMAL}
-          />
-        </Container>
-      </Stage>
+      <Provider store={workspace}>
+        <Stage
+          options={{
+            resolution: window.devicePixelRatio || 1,
+            backgroundColor: "#d2d6da",
+          }}
+          onMount={(a) => {
+            app.current = a;
+          }}
+          onUnmount={() => {
+            app.current = undefined;
+          }}
+        ></Stage>
+      </Provider>
     </div>
   );
 }

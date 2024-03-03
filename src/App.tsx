@@ -4,60 +4,25 @@ import {
   ResizablePanel,
   ResizablePanelGroup,
 } from "@/components/ui/resizable.tsx";
-import {
-  Menubar,
-  MenubarCheckboxItem,
-  MenubarContent,
-  MenubarItem,
-  MenubarMenu,
-  MenubarSeparator,
-  MenubarShortcut,
-  MenubarTrigger,
-} from "@/components/ui/menubar.tsx";
-import { Workspace } from "@/components/widgets/workspace.tsx";
+import { Menubar } from "@/components/ui/menubar.tsx";
 import { UnitTree } from "@/components/widgets/unit-tree.tsx";
 import { BLEND_MODES } from "@pixi/constants";
-import { File, Pencil, PenTool } from "lucide-react";
-import { Label } from "@radix-ui/react-menubar";
+import { Tabs, TabsContent } from "@/components/ui/tabs.tsx";
+import { Menu } from "@/components/widgets/menu.tsx";
+import { platform } from "@/lib/utils.ts";
+import { Toolbar } from "@/components/widgets/toolbar.tsx";
 
 function App() {
   return (
     <div className="relative h-screen flex flex-col items-stretch bg-border overflow-hidden">
-      <Menubar
-        role="titlebar"
-        className="relative border-none shadow-none rounded-none"
-      >
-        <MenubarMenu>
-          <MenubarTrigger>
-            <File className="w-4" />
-          </MenubarTrigger>
-          <MenubarContent>
-            <MenubarItem>
-              New Tab <MenubarShortcut>⌘T</MenubarShortcut>
-            </MenubarItem>
-            <MenubarItem>New Window</MenubarItem>
-            <MenubarSeparator />
-            <MenubarItem>Share</MenubarItem>
-            <MenubarSeparator />
-            <MenubarItem>Print</MenubarItem>
-          </MenubarContent>
-        </MenubarMenu>
-        <MenubarMenu>
-          <MenubarTrigger>
-            <Pencil className="w-4" />
-          </MenubarTrigger>
-          <MenubarContent>
-            <MenubarCheckboxItem checked={true} className="gap-2">
-              <Pencil className="w-4" />
-              <Label>铅笔</Label>
-            </MenubarCheckboxItem>
-            <MenubarCheckboxItem className="gap-2">
-              <PenTool className="w-4" />
-              <Label>钢笔</Label>
-            </MenubarCheckboxItem>
-          </MenubarContent>
-        </MenubarMenu>
-      </Menubar>
+      {platform !== "darwin" && (
+        <Menubar
+          role="titlebar"
+          className="relative border-none shadow-none rounded-none"
+        >
+          <Menu />
+        </Menubar>
+      )}
       <ResizablePanelGroup direction="vertical">
         <ResizablePanel>
           <ResizablePanelGroup direction="horizontal">
@@ -99,7 +64,11 @@ function App() {
             </ResizablePanel>
             <ResizableHandle />
             <ResizablePanel role="workspace">
-              <Workspace className="w-full h-full"></Workspace>
+              <Tabs className="w-full h-full" value="1">
+                <TabsContent value="1">
+                  <Toolbar />
+                </TabsContent>
+              </Tabs>
             </ResizablePanel>
             <ResizableHandle />
             <ResizablePanel
